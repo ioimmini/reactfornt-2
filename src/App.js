@@ -1,33 +1,31 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const App = () => {
 
-  const [text, setText] = useState("11");
-  const [edit, setEdit] = useState(false);
+  const [posts, setPosts] = useState([]);
 
-  let content = <div>
-    {text}<button onClick={()=> setEdit(true)}>edit</button>
-  </div>
+  useEffect(() => {
+    // axios({
+    //   method: 'GET',
+    //   url:'https://jsonplaceholder.typicode.com/photos'
 
-  if(edit) {
-    content = <div>
-    <input type="text"
-      value={text}
-      onChange={(e) => {
-        console.log(e.target.value);
-        setText(e.target.value);
-      }} 
-    />
-  <button onClick={()=>setEdit(false)}>edit</button>
-  </div>    
-  }
+    // }).then(response =>setPosts(response.data))
+
+    axios.get('https://jsonplaceholder.typicode.com/photos')
+    .then(response =>setPosts(response.data))
+  })
 
   return (
-    <>
-      {content}
-    </>
-  );
+<u1>
+  {posts.map(post=> (
+    <li key={post.id}>
+      <div>{post.title}</div>
+      <div><img src={post.thumbnailUrl}/></div>
+    </li>
+  ))}
+</u1>
+  )
 }
-
   
 export default App;
